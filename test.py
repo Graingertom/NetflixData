@@ -119,4 +119,42 @@ ax5.set_title('Top Genres of Netflix Shows by Minutes Watched')
 
 plt.show()
 
-#Finally let us see how good we've been at finishing what we've started.
+#Finally let us see how good we've been at finishing what we've started. We will use the Finished column but we must turn our 'Y' and 'N' into True and False.
+
+nf['Finished'] = nf['Finished'].map(
+                {'Y':True ,'N':False})
+
+#We are printing the column to check the changes have been made
+print(nf['Finished'])
+
+#Now let's plot a pie chart against this Boolean column
+print(Counter(nf['Finished']))
+
+#Group the dataset and count so we can use this number for our pie chart
+was_finished = nf.groupby('Finished').agg('count')
+print(was_finished)
+
+#sort the values so we can input them into our graph
+finish_labels = was_finished.Show_Name.sort_values().index
+finish_counts = was_finished.Show_Name.sort_values()
+
+#Create a pie chart to visualise the data
+fig, ax6 = plt.subplots(figsize=(6,3), subplot_kw=dict(aspect="equal"))
+
+def func(pct, allvals):
+    absolute = int(np.round(pct/100.*np.sum(allvals)))
+    return "{:.1f}%\n({:d})".format(pct, absolute)
+
+wedges, texts, autotexts = ax6.pie(finish_counts, autopct=lambda pct: func(pct, finish_counts),
+                                    textprops=dict(color='w'))
+
+ax6.legend(wedges, finish_labels,
+            title='True or False',
+            loc='center left',
+            bbox_to_anchor=(1, 0, 0.5, 1)) 
+
+plt.setp(autotexts, size=8, weight="bold")
+
+ax6.set_title("Did we finish the show?! by Number of Shows Watched")
+
+plt.show()
