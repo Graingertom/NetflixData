@@ -80,11 +80,12 @@ Top5Watched = TopWatched.head()
 print(Top5Watched)
 
 #We can now create a horizontal bar chart to clearly show these top 5 and the amount of time spent watching them
-fig, ax3 = plt.subplots(figsize=(17, 8), dpi=70)
+fig, ax3 = plt.subplots(figsize=(30, 8), dpi=70)
 ax3.barh(Top5Watched['Show_Name'], Top5Watched['Total_Watched'], align='center')
-ax3.set_yticks(Top5Watched['Show_Name'], labels=Top5Watched['Show_Name'])
+ax3.set_yticks(Top5Watched['Show_Name'], labels=Top5Watched['Show_Name'], wrap=True)
 ax3.invert_yaxis()
-ax3.set_xlabel('Minutes Watched')
+ax3.set_ylabel('Show Name', fontweight='bold')
+ax3.set_xlabel('Minutes Watched', fontweight='bold')
 ax3.set_title('Top 5 Netflix Shows by Minutes Watched')
 
 plt.show()
@@ -101,8 +102,8 @@ genre_counts = genre_type.Show_Name.sort_values()
 #Plot a bar chart to see a clear comparison of what genres of title were chosen, we will wait to show the chart so we can compare later on.
 fig, ax4 = plt.subplots(figsize=(17, 8), dpi=70)
 ax4.bar(genre_labels, genre_counts, align='center')
-ax4.set_yticks(genre_counts, lables=genre_counts)
-ax4.set_xlabel('Genre of Show Watched')
+ax4.set_ylabel('Number of Shows', fontweight='bold')
+ax4.set_xlabel('Genre of Show Watched', fontweight='bold')
 ax4.set_title('Distribution of genres by number of shows watched')
 
 #Now how does this differ for minutes watched. We can use our TopWatched dataframe from before. However we need to group the genres up with the time watched.
@@ -113,8 +114,9 @@ print(GenresWatched)
 #Now we can use this to plot another horizontal bar chart
 fig, ax5 = plt.subplots(figsize=(17, 8), dpi=70)
 ax5.bar(GenresWatched['Genre'], GenresWatched['Total_Watched'], align='center')
-ax5.set_yticks(GenresWatched['Total_Watched'], labels=GenresWatched['Total_Watched'])
-ax5.set_xlabel('Genre of Show Watched')
+ax5.set_ylim([0, 4000])
+ax5.set_ylabel('Minutes Watched', fontweight='bold')
+ax5.set_xlabel('Genre of Show Watched', fontweight='bold')
 ax5.set_title('Top Genres of Netflix Shows by Minutes Watched')
 
 plt.show()
